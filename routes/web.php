@@ -6,6 +6,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuthController;
 
 use App\Http\Controllers\SectionController;
+use App\Http\Controllers\HallsController;
 
 use Illuminate\Support\Facades\Route;
 
@@ -28,7 +29,7 @@ Route::group(['prefix' => 'superadmin', 'middleware' => ['web', 'isSuperAdmin']]
     Route::get('users', [SuperAdminController::class, 'users'])->name('superAdminUsers');
     Route::get('manage-role', [SuperAdminController::class, 'manageRole'])->name('manageRole');
     Route::get('update-role', [SuperAdminController::class, 'updateRole'])->name('updateRole');
-
+    //Section CRUD
     Route::get('sections', [SectionController::class, 'sections'])->name('AdminSections');
     Route::get('sections-create', [SectionController::class, 'create'])->name('sections.create');
     Route::post('sections', [SectionController::class, 'store'])->name('sections.store');
@@ -39,6 +40,19 @@ Route::group(['prefix' => 'superadmin', 'middleware' => ['web', 'isSuperAdmin']]
 
     // Route to delete a section
     Route::delete('/sections/{id}', [SectionController::class, 'destroy'])->name('sections.destroy');
+
+    //Hall Crud
+
+    Route::get('halls', [HallsController::class, 'halls'])->name('AdminHalls');
+    Route::get('halls-create', [HallsController::class, 'create'])->name('halls.create');
+    Route::post('halls', [HallsController::class, 'store'])->name('halls.store');
+    // Route to edit a section
+    Route::get('/halls/{id}/edit', [HallsController::class, 'edit'])->name('halls.edit');
+    // Route to update a section
+    Route::put('/halls/{id}', [HallsController::class, 'update'])->name('halls.update');
+
+    // Route to delete a section
+    Route::delete('/halls/{id}', [HallsController::class, 'destroy'])->name('halls.destroy');
 });
 
 Route::group(['prefix' => 'admin', 'middleware' => ['web', 'isAdmin']], function () {

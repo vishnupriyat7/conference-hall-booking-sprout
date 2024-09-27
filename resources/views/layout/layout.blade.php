@@ -36,6 +36,13 @@
                 <li>
                     <a href="{{ route('AdminSections') }}"><span class="fa fa-users mr-3"></span>Sections</a>
                 </li>
+
+
+                <li>
+                    <a href="{{ route('AdminHalls') }}"><span class="fa fa-users mr-3"></span>Halls</a>
+                    {{-- <a href=""><span class="fa fa-users mr-3"></span>Halls</a> --}}
+                </li>
+
                 <li>
                     <a href="{{ route('superAdminUsers') }}"><span class="fa fa-users mr-3"></span>Users</a>
                 </li>
