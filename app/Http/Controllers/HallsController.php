@@ -67,4 +67,8 @@ class HallsController extends Controller
 
         return redirect()->route('AdminHalls')->with('success', 'Hall deleted successfully!');
     }
+    public function bookHall()
+    {
+        return view('superadmin.halls.bookhall.book-hall'); // This will render the 'book-hall' view
+    }
 }
