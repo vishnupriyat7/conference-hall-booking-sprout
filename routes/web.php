@@ -50,6 +50,12 @@ Route::group(['prefix' => 'superadmin', 'middleware' => ['web', 'isSuperAdmin']]
     // Book Hall route to show calendar
     Route::get('book-hall', [HallsController::class, 'bookHall'])->name('bookHall');
 
+    // Route to show the booking form
+    Route::get('book-hall/form', [HallsController::class, 'showBookingForm'])->name('hallBooking.form');
+
+    // Route to store the booking details
+    Route::post('book-hall', [HallsController::class, 'storeBooking'])->name('hallBooking.store');
+
 
 
     // Route to edit a section

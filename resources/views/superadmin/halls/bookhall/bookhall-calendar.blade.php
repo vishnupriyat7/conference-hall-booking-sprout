@@ -22,8 +22,8 @@
                 // You can load booked events here from the server if needed
             ],
             dateClick: function(info) {
-                alert('Date: ' + info.dateStr);
-                // Handle booking logic here
+                // alert('Date: ' + info.dateStr);
+                window.location.href = "{{ route('hallBooking.form') }}?date=" + info.dateStr;
             }
         });
 
