@@ -4,6 +4,11 @@
 @section('space-work')
 <div class="container-fluid">
     <h1>Book Hall</h1>
+     @if (session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
     <div id="calendar"></div>
 </div>
 
@@ -18,12 +23,17 @@
         var calendar = new FullCalendar.Calendar(calendarEl, {
             initialView: 'dayGridMonth', // Shows the current month
             selectable: true, // Allows you to select dates for booking
-            events: [
-                // You can load booked events here from the server if needed
-            ],
+            // Fetch events from server dynamically
+            events: "{{ route('hallBookings.fetch') }}", // This route returns booking data as JSON
             dateClick: function(info) {
                 // alert('Date: ' + info.dateStr);
                 window.location.href = "{{ route('hallBooking.form') }}?date=" + info.dateStr;
+            },
+            eventClick: function(info) {
+                alert(
+                    'Hall: ' + info.event.title + '\n' + // Hall name
+                    info.event.extendedProps.description // Section and time range
+                );
             }
         });
 

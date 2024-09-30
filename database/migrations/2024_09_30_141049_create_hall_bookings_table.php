@@ -15,13 +15,16 @@ return new class extends Migration
             $table->id();
             $table->date('date');
             $table->string('section');
-            $table->unsignedBigInteger('hall');
+            
+            // Rename 'hall' to 'hall_id' for clarity
+            $table->unsignedBigInteger('hall_id');
+            
             $table->time('time_from');
             $table->time('time_to');
             $table->text('remarks')->nullable();
-
-            // Assuming 'hall' is a foreign key referencing the halls table
-            $table->foreign('hall')->references('id')->on('halls')->onDelete('cascade');
+            
+            // Foreign key constraint referencing the 'halls' table
+            $table->foreign('hall_id')->references('id')->on('halls')->onDelete('cascade');
             $table->timestamps();
         });
     }

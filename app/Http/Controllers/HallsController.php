@@ -82,26 +82,43 @@ class HallsController extends Controller
     }
 
     public function storeBooking(Request $request)
-{
-    $request->validate([
-        'date' => 'required|date',
-        'section' => 'required|string',
-        'hall' => 'required|exists:halls,id',
-        'time_from' => 'required|date_format:H:i',
-        'time_to' => 'required|date_format:H:i|after:time_from',
-        'remarks' => 'nullable|string',
-    ]);
+    {
+        $request->validate([
+            'date' => 'required|date',
+            'section' => 'required|string',
+            'hall' => 'required|exists:halls,id',
+            'time_from' => 'required|date_format:H:i',
+            'time_to' => 'required|date_format:H:i|after:time_from',
+            'remarks' => 'nullable|string',
+        ]);
 
-    // Create a new booking record
-    HallBooking::create([
-        'date' => $request->date,
-        'section' => $request->section,
-        'hall_id' => $request->hall,
-        'time_from' => $request->time_from,
-        'time_to' => $request->time_to,
-        'remarks' => $request->remarks,
-    ]);
+        // Create a new booking record
+        HallBooking::create([
+            'date' => $request->date,
+            'section' => $request->section,
+            'hall_id' => $request->hall, // Corrected to 'hall_id'
+            'time_from' => $request->time_from,
+            'time_to' => $request->time_to,
+            'remarks' => $request->remarks,
+        ]);
 
-    return redirect()->route('bookHall')->with('success', 'Hall booked successfully!');
-}
+        return redirect()->route('bookHall')->with('success', 'Hall booked successfully!');
+    }
+    public function getBookings()
+    {
+        // Fetch all hall bookings
+        $bookings = HallBooking::with('hall')->get();
+
+        // Transform bookings to FullCalendar format
+        $events = $bookings->map(function ($booking) {
+            return [
+                'title' => $booking->hall->hall_name, // Display the actual hall name
+                'start' => $booking->date . 'T' . $booking->time_from, // Start time
+                'end' => $booking->date . 'T' . $booking->time_to, // End time
+                'description' => $booking->section . ' booked from ' . $booking->time_from . ' to ' . $booking->time_to, // Section and time range
+            ];
+        });
+
+        return response()->json($events);
+    }
 }

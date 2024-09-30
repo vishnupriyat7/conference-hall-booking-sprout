@@ -56,6 +56,8 @@ Route::group(['prefix' => 'superadmin', 'middleware' => ['web', 'isSuperAdmin']]
     // Route to store the booking details
     Route::post('book-hall', [HallsController::class, 'storeBooking'])->name('hallBooking.store');
 
+// web.php
+Route::get('/hall-bookings', [HallsController::class, 'getBookings'])->name('hallBookings.fetch');
 
 
     // Route to edit a section
