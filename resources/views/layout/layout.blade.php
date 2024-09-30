@@ -10,13 +10,10 @@
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="{{ URL::asset('css/style.css') }}">
+    <link rel="stylesheet" href="{{ URL::asset('css/bootstrap.min.css') }}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="{{ URL::asset('js/multiselect-dropdown.js') }}"></script>
-    <style>
-        .multiselect-dropdown {
-            width: 100% !important;
-        }
-    </style>
+   
 </head>
 
 <body>
@@ -33,6 +30,9 @@
             <ul class="list-unstyled components mb-5">
 
                 @if(auth()->user()->role == 1)
+                <li>
+                    <a href=""><span class="fa fa-users mr-3"></span>Dashboard</a>
+                </li>
                 <li>
                     <a href="{{ route('AdminSections') }}"><span class="fa fa-users mr-3"></span>Sections</a>
                 </li>
@@ -57,15 +57,30 @@
         </nav>
 
         <!-- Page Content  -->
-        <div id="content" class="p-4 p-md-5 pt-5">
-            @yield('space-work')
+        <div id="content" class="p-4">
+            <div class="row justify-content-center">
+                <div class="col-xl-12 col-lg-12 col-md-9 col">
+                    <div class="card o-hidden border-0 shadow-lg my-5">
+                        <div class="card-body p-0">
+                            <!-- Nested Row within Card Body -->
+                            <div class="row p-2">
+                                {{-- <div class="col-lg-6 d-none d-lg-block bg-login-image"></div> --}}
+                                <div class="col-lg-12 m-1">
+                                    @yield('space-work')
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
-    <!-- <script src="{{ asset('js/jquery.min.js') }}"></script> -->
+    <script src="{{ URL::asset('js/jquery.min.js') }}"></script>
     <script src="{{ URL::asset('js/popper.js') }}"></script>
     <script src="{{ URL::asset('js/bootstrap.min.js') }}"></script>
     <script src="{{ URL::asset('js/main.js') }}"></script>
+    <script src="{{ URL::asset('js/multiselect-dropdown.js') }}"></script>
 </body>
 
 </html>
