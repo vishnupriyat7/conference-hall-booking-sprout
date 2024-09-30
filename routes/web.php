@@ -25,7 +25,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::group(['prefix' => 'superadmin', 'middleware' => ['web', 'isSuperAdmin']], function () {
-    Route::get('dashboard', [SuperAdminController::class, 'dashboard']);
+    Route::get('dashboard', [SuperAdminController::class, 'dashboard'])->name('dashboard');
     Route::get('users', [SuperAdminController::class, 'users'])->name('superAdminUsers');
     Route::get('manage-role', [SuperAdminController::class, 'manageRole'])->name('manageRole');
     Route::get('update-role', [SuperAdminController::class, 'updateRole'])->name('updateRole');
@@ -46,6 +46,18 @@ Route::group(['prefix' => 'superadmin', 'middleware' => ['web', 'isSuperAdmin']]
     Route::get('halls', [HallsController::class, 'halls'])->name('AdminHalls');
     Route::get('halls-create', [HallsController::class, 'create'])->name('halls.create');
     Route::post('halls', [HallsController::class, 'store'])->name('halls.store');
+
+    // Book Hall route to show calendar
+    Route::get('book-hall', [HallsController::class, 'bookHall'])->name('bookHall');
+
+    // Route to show the booking form
+    Route::get('book-hall/form', [HallsController::class, 'showBookingForm'])->name('hallBooking.form');
+
+    // Route to store the booking details
+    Route::post('book-hall', [HallsController::class, 'storeBooking'])->name('hallBooking.store');
+
+
+
     // Route to edit a section
     Route::get('/halls/{id}/edit', [HallsController::class, 'edit'])->name('halls.edit');
     // Route to update a section

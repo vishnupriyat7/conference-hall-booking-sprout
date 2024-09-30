@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Hall;
+use App\Models\HallBooking;
 
 class HallsController extends Controller
 {
@@ -67,4 +68,40 @@ class HallsController extends Controller
 
         return redirect()->route('AdminHalls')->with('success', 'Hall deleted successfully!');
     }
+    public function bookHall()
+    {
+        return view('superadmin.halls.bookhall.bookhall-calendar'); // This will render the 'book-hall' view
+    }
+
+    public function showBookingForm(Request $request)
+    {
+        // Fetch halls from the database
+        $halls = Hall::all(); // Assuming you have a Hall model
+
+        return view('superadmin.halls.bookhall.hallbook', compact('halls'));
+    }
+
+    public function storeBooking(Request $request)
+{
+    $request->validate([
+        'date' => 'required|date',
+        'section' => 'required|string',
+        'hall' => 'required|exists:halls,id',
+        'time_from' => 'required|date_format:H:i',
+        'time_to' => 'required|date_format:H:i|after:time_from',
+        'remarks' => 'nullable|string',
+    ]);
+
+    // Create a new booking record
+    HallBooking::create([
+        'date' => $request->date,
+        'section' => $request->section,
+        'hall_id' => $request->hall,
+        'time_from' => $request->time_from,
+        'time_to' => $request->time_to,
+        'remarks' => $request->remarks,
+    ]);
+
+    return redirect()->route('bookHall')->with('success', 'Hall booked successfully!');
+}
 }
